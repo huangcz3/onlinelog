@@ -1,0 +1,195 @@
+<html>
+	<head>
+		<title>流量详情</title>
+		<meta http-equiv="x-ua-compatible" content="IE=EmulateIE8" >
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+		<link rel="stylesheet" type="text/css" href="./css/nav.css">
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="./lib/json2.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+    <input type="hidden" id="loginUserId">
+    <input type="hidden" id="chargeId">
+	<div id="pageWrap">
+		<!--这是最左边的div-->
+		<div class="left_container border-shadow">
+			<div class="header">
+				<!--<span><img class="pngFix" src="./image/portrait.png" alt=""></span>-->
+				<div class="portrait"></div>
+			</div>
+			<div class="lbox">
+				<div class="left_info">
+					<div class="lt icon icon-tel"></div>
+					<div style="float: left;"><span class="font_style">电话号码</span></div>
+				</div>
+				<div class="left_ms">
+					<span class="font_style" id="phoneNo"></span>
+				</div>
+			</div>
+			<div class="lbox">
+				<div class="left_info">
+					<div class="lt icon icon-flow"></div>
+					<div style="float: left;"><span class="font_style">计费流量</span></div>
+				</div>
+				<div class="left_ms">
+					<span class="font_style"><span id="flow"></span>MB</span>
+				</div>
+			</div>
+			<div class="lbox">
+				<div class="left_info">
+					<div class="lt icon icon-type"></div>
+					<div style="float: left;"><span class="font_style">流量类型</span></div>
+				</div>
+				<div class="left_ms">
+					<span class="font_style" id="flowType">多种数据流量</span>
+				</div>
+			</div>
+			<div class="lbox">
+				<div class="left_info">
+					<div class="lt icon icon-time"></div>
+					<div style="float: left;"><span class="font_style">时间段</span></div>
+				</div>
+				<div class="left_ms" style="width: 100px;text-align: left;">
+					<span class="font_style" id="startTime"></span>
+					<p class="font_style">~</p>
+					<span class="font_style" id="endTime"></span>
+				</div>
+			</div>
+		</div>
+		<!--中间的div-->
+		<div class="mid border-shadow">
+			<div class="mid-head clearfix">
+				<div class="lt s-first-child">共运行了 <span id="totalAppNum"></span> 款软件</div>
+				<div class="rt btn btn-default j-disagree">不认可</div>
+				<a class="rt s-hyper-link j-back-link" href="##">&lt;&lt;回退老系统</a>
+			</div>
+			<div class="mid-inner-mid">
+				<div class="rows-wrap">
+					<!--<div class="row clearfix" data-appid="groupValue">
+						<div class="row-lt-box">
+							<span class="app-icon-default"></span>
+						</div>
+						<div class="row-rt-box">
+							<ul class="item item-top clearfix">
+								<li class="s-first-child">
+									<b data-key="groupValueName"></b>
+									<span class="app-group">视频类</span>
+								</li>
+								<li>
+									<span class="flow-box orange">
+										<b data-key="groupTotalFlow"></b>
+										<b>MB</b>
+									</span>
+								</li>
+							</ul>
+							<ul class=" item item-bottom clearfix">
+								<li class="s-first-child">
+									<span>上网时间：</span>
+									<span data-key="timeRange"></span>
+									<span class="margin-left-5">终端：</span>
+									<span data-key="termName"></span>
+								</li>
+								<li>
+									<span>占比：</span>
+									<span data-key="percent"></span>
+									<span>%</span>
+								</li>
+							</ul>
+						</div>
+					</div>-->
+				</div>
+			</div>
+			<div class="mid-foot fixed-foot">
+				<span class="j-loadAll">
+					<span>加载全部</span>
+					<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+				</span>
+			</div>
+		</div>
+		<!--右边的div-->
+		<div class="righter">
+			<div class="title">
+				<i class="app-icon-default"></i>
+				<span class="detail-name"></span>
+			</div>
+			<div class="righter-content">
+				<p>
+
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!--start template-->
+	<div class="template template-row">
+		<div class="row clearfix" data-appid="groupValue">
+			<div class="row-lt-box">
+				<span class="app-icon-default"></span>
+			</div>
+			<div class="row-rt-box">
+				<ul class="item item-top clearfix">
+					<li>
+						<b data-key="groupValueName"></b>
+						<span class="app-group">视频类</span>
+					</li>
+					<li>
+						<span class="flow-box orange">
+							<b data-key="groupTotalFlow"></b>
+							<b>MB</b>
+						</span>
+					</li>
+				</ul>
+				<ul class=" item item-bottom clearfix">
+					<li>
+						<span>上网时间：</span>
+						<span data-key="timeRange"></span>
+						<span class="margin-left-5">终端：</span>
+						<span data-key="termName"></span>
+					</li>
+					<li>
+						<span>占比：</span>
+						<span data-key="percent"></span>
+						<span>%</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--end template-->
+	<!--start popupBox 不认可原因列表-->
+	<div class="popupBox">
+		<div class="mid-head popup-head">
+			<span>不认可原因：</span>
+		</div>
+		<div class="popup-main">
+			<form id="disAgreeReasons">
+				<ul class="popup-ul radio-box">
+					<!--<li>
+						<input type="radio" id="1" name="reasons"/>
+						<label for="1">客户不认可改时间段有上网行为</label>
+						<p class="float-box">你好，现在只能手机功能很强大，很多情况都可以导致连接网络，比如手机内置软件自动更新或者升级都可以产生流量，为了昌盛不必要的流量，使用手机时记得关闭自动更新程序，好吗？</p>
+					</li>-->
+				</ul>
+			</form>
+		</div>
+		<div class="popup-foot">
+			<span class="btn btn-blue j-ensure">确定</span>
+			<span class="btn btn-default j-cancel">取消</span>
+		</div>
+	</div>
+	<!--end popupBox 不认可原因列表-->
+	<!--start 请求等待模态框-->
+	<div class="waiting-modal">
+		<div class="content-wrap">
+			<div class="content-box">
+				<span class="img-box"></span>
+				<p class="msg-box">数据加载中...</p>
+			</div>
+		</div>
+	</div>
+	<!--end 请求等待模态框-->
+	</body>
+	<script type="text/javascript" src="./lib/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="./js/webBlog.js"></script>
+</html>

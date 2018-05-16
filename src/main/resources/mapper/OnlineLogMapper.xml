@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.asiainfo.onlineLog.dao.IOnlineLogDao">
+
+    <select id="queryTasApplictionList" resultType="com.asiainfo.onlineLog.model.TasApplication">
+        SELECT
+        *
+        FROM
+        tas_application
+    </select>
+
+    <select id="queryTasApproveExpList" resultType="com.asiainfo.onlineLog.model.TasApproveExp">
+      SELECT
+      *
+      FROM
+      tas_approve_explain
+    </select>
+
+    <select id="queryIsReQuery" parameterType="com.asiainfo.onlineLog.model.OverviewUse" resultType="boolean">
+        SELECT
+        COUNT 1
+        FROM
+        (SELECT
+        1
+        FROM TAS_QUERY_LOG
+        WHERE OPERID=#{loginUserId} and PHONE_NO=#{phoneNo} and STARTTIME=#{startTime} and ENDTIME=#{endTime}
+        FETCH FIRST 1 ROWS ONLY
+        )
+    </select>
+
+    <select id="replaceIntoTasQueryLog">
+    REPLACE INTO tas_query_log(
+        OPERID,
+        PHONE_NO,
+        CLIENT_IP,
+        OP_TIME,
+        USEDTIMES,
+        CHARGE_ID,
+        STARTTIME,
+        ENDTIME,
+        FLOW,
+        BILLNO
+	) values (
+        #{overviewUse.loginUserId},
+        #{overviewUse.phoneNo},
+        #{ipAddr},
+        #{now},
+        #{usedTime},
+        #{overviewUse.chargeId},
+        #{overviewUse.startTime},
+        #{overviewUse.endTime},
+        #{overviewUse.flow},
+        #{overviewUse.billNo}
+	)
+    </select>
+
+    <select id="saveReansonInfo">
+        replace INTO tas_app_detail(
+            op_month,
+            phone_no,
+            btime,
+            etime,
+            term_name,
+            app_id,
+            app_name,
+            totalFlow,
+            cdrFlow,
+            rate,
+            create_time,
+            id,
+            NotRe_cause,
+            situation
+        ) VALUES (
+            #{nowMonth},
+            #{overviewUse.phoneNo},
+            #{overviewUse.startTime},
+            #{overviewUse.endTime},
+            #{concreteUse.termModelCode},
+            #{concreteUse.busiId},
+            #{concreteUse.busiName},
+            #{concreteUse.aliasFlow},
+            #{overviewUse.flow},
+            #{concreteUse.percent},
+            #{now},
+            #{tasApproveExp.id},
+            #{tasApproveExp.reason},
+            #{tasApproveExp.situation}
+        )
+
+    </select>
+
+</mapper>
